@@ -1,0 +1,22 @@
+---
+#------------------------------------------------------------------------------
+# For more images, see <https://hub.docker.com/> (login required).
+#------------------------------------------------------------------------------
+
+
+- name: Deploy Docker container(s)
+  hosts: localhost
+  connection: local
+  vars: 
+  tasks:
+  roles:
+
+  # Uncomment the name of the Ansible role for a Docker image you want to run.
+  # The respective Ansible playbooks for these roles are under the `roles/` directory
+
+  - alpine
+  # - nginx
+  # - ubuntu
+
+
+...

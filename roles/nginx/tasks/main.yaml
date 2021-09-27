@@ -1,0 +1,22 @@
+---
+
+
+- name: Deploy nginx Docker container
+  community.docker.docker_container:
+    image: nginx:stable
+    name: nginx
+    state: started
+    auto_remove: true
+    container_default_behavior: no_defaults
+    ports:
+      - "8080:80"     # host:container
+
+- name: Connect Commands
+  ansible.builtin.debug: 
+    msg:
+    - http://localhost:8080/
+    - "docker exec -it nginx bash"
+
+
+
+...

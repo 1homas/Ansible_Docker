@@ -1,0 +1,16 @@
+---
+- name: Stop the `alpine` Docker container
+  hosts: localhost
+  connection: local
+  tasks:
+
+  - name: Stop a container
+    community.docker.docker_container:
+      name: alpine
+      state: stopped
+    register: result
+    
+  - name: result
+    ansible.builtin.debug: var=result
+
+...

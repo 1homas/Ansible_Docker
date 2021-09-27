@@ -1,0 +1,68 @@
+---
+
+
+- name: Deploy Alpine Docker container
+  community.docker.docker_container:
+    name: alpine
+    image: alpine:latest    # default uses :latest
+    state: started          # absent | present | *started* | stopped
+    container_default_behavior: no_defaults
+    auto_remove: true
+    ports:
+      - "2223:22"     # host:container
+    interactive: true
+    network_mode: bridge
+  register: result
+
+- name: result
+  ansible.builtin.debug: var=result
+
+- name: result.container.NetworkSettings
+  ansible.builtin.debug: var=result.container.NetworkSettings
+
+- name: Connect Commands
+  ansible.builtin.debug: 
+    msg:
+    - "docker exec -it alpine sh"
+
+
+#----------------------------------------------------------------------------
+# additional options
+#----------------------------------------------------------------------------
+  # ports:
+  # - "2222:22"     # host:container
+  #
+  # - "127.0.0.1:8081:9001/udp" # container UDP/9001 as host port 8081 on 127.0.0.1
+  # - "9002"    # container port 9002 as a random host port
+  # - "8000-8100:9003"  # container 9003 => free host 8000-8100
+  # - "7000-7010:9010-9020" # container 9010-9020 => host 7000-7010
+  #
+  # env_file: /var/tmp/jenkins/agent.env
+  #
+  # env:
+  #   arg1: "true"
+  #   arg2: "whatever"
+  #
+  # network_mode: bridge    # bridge, host, none, <network_name> or default
+  #
+  # mac_address: 92:d0:c6:0a:29:33
+  #
+  # networks:
+  # - name: local
+  #   ipv4_address: 172.16.1.18
+  #   aliases: test
+  # - name: TestingNet
+  #   ipv4_address: 172.16.1.18
+  #   aliases: my_container
+  #   links:
+  #     - sleeper
+  # - name: TestingNet2
+  #   ipv4_address: 172.16.10.20
+  #
+  # command: sleep 1d
+  #
+  # volumes:
+  #   - /data
+
+
+...

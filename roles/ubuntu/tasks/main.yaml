@@ -1,0 +1,65 @@
+---
+
+
+- name: Deploy Ubuntu Docker Container
+  community.docker.docker_container:
+    image: ubuntu:20.04
+    # image: ubuntu:18.04
+    name: ubuntu
+    state: started
+    auto_remove: true
+    container_default_behavior: no_defaults
+    expose: "22"
+    ports:
+      - "2222:22"         # host:container
+    network_mode: bridge
+    interactive: yes
+  register: result
+
+# - name: result
+#   ansible.builtin.debug: var=result
+
+- name: result.container.NetworkSettings
+  ansible.builtin.debug: var=result.container.NetworkSettings
+
+- name: Connect Commands
+  ansible.builtin.debug: 
+    msg:
+    - "docker exec -it ubuntu bash"
+
+
+#
+
+# - name: install python3
+#   package:
+#   name: “python3”s
+#   state: present
+
+# - name: Pip3 install docker
+#   command: “pip3 install docker”
+
+# - name: install docker package
+#   yum:
+#     name: “docker-ce-18.09.1–3.el7.x86_64”
+#     enablerepo: Docker12
+#     state: present
+#     skip_broken: yes
+
+# - name: Start docker service
+#   service:
+#     name: “docker”
+#     state: started
+#     enabled: yes
+#   register: x
+# — debug:
+#   var: x
+
+
+# - name: Add the container host to the inventory file.
+#   ansible.builtin.blockinfile:
+#     path: /etc/ansible/myhosts.txt
+#     block: |
+#       [docker]
+#       {{ x.ansible_facts.docker_container.NetworkSettings.IPAddress }} ansible_ssh_user=root ansible_ssh_pass=redhat
+
+...
